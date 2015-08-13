@@ -1,0 +1,20 @@
+{
+  "name": "generator-mgen",
+  "version": "0.1.0",
+  "description": "Generate ES6 Meteor Files",
+  "license": "MIT",
+  "repository": "adambrodzinski/generator-mgen",
+  "files": [
+    "app",
+    "component"
+  ],
+  "keywords": [
+    "yeoman-generator",
+    "meteor-generate",
+    "meteor",
+    "react"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.20.2"
+  }
+}
