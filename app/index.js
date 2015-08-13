@@ -3,11 +3,16 @@ var generators = require('yeoman-generator');
 module.exports = generators.Base.extend({
   constructor: function constr() {
     generators.Base.apply(this, arguments);
-
-    this.option('coffee');
   },
 
-  hello: function hello() {
-    this.log('app test');
+  createConfig: function createConfig() {
+    if (this.option('init')) {
+      this.config.defaults({
+        view: 'react',
+        components: 'app',
+      });
+      this.config.save();
+      this.log('.yo-rc file created');
+    }
   },
 });
