@@ -4,13 +4,13 @@ module.exports = generators.Base.extend({
   constructor: function constr() {
     generators.Base.apply(this, arguments);
     this.argument('name', { type: String, required: true });
+    this.nameLower = this.name.toLowerCase();
     //this.log(this.config.getAll());
     //this.log(this.arguments);
     this.log('Creating component files...\n');
   },
 
   getPaths: function getPaths() {
-    this.nameLower = this.name.toLowerCase();
     this.rootPath = 'components/';
     this.destPath = this.rootPath + this.nameLower + '/';
   },
@@ -24,6 +24,15 @@ module.exports = generators.Base.extend({
       this.comp = 'comp.js';
     }
   },
+
+  getTest: function getTest() {
+    if (this.config.get('env') === 'meteor') {
+      this.testTemplate = 'comp_spec_mt.js';
+    } else {
+      this.testTemplate = 'comp_spec.js';
+    }
+  },
+
 
   writeComponent: function writeComponent() {
     var ext = this.config.get('componentExtension') || '.jsx';
@@ -43,6 +52,17 @@ module.exports = generators.Base.extend({
     this.fs.copyTpl(
       this.templatePath('comp.scss'),
       this.destinationPath(stylePath),
+      { name: this.name }
+    );
+  },
+
+  writeTest: function writeStyle() {
+    var ext = '.js';
+    var testPath = this.destPath + 'tests/' + this.name + '_spec' + ext;
+
+    this.fs.copyTpl(
+      this.templatePath(this.testTemplate),
+      this.destinationPath(testPath),
       { name: this.name }
     );
   },
