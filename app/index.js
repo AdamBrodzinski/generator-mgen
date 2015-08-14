@@ -10,6 +10,7 @@ module.exports = generators.Base.extend({
       this.config.defaults({
         view: 'react',
         components: 'app',
+        componentExtension: '.js',
       });
       this.config.save();
       this.log('.yo-rc file created');
