@@ -4,7 +4,7 @@ let styles;
 class <%= name %> extends React.Component {
   render() {
     return (
-      <div ref={<%= name %>} style={styles.container}>
+      <div ref='<%= name %>' style={styles.container}>
         <%= name %>
       </div>
     );
