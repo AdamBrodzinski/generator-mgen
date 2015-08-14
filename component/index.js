@@ -4,7 +4,6 @@ module.exports = generators.Base.extend({
   constructor: function constr() {
     generators.Base.apply(this, arguments);
     this.argument('name', { type: String, required: true });
-    this.ext = this.config.get('componentExtension') || '.jsx';
     //this.log(this.config.getAll());
     //this.log(this.arguments);
     this.log('Creating component files...\n');
@@ -13,23 +12,37 @@ module.exports = generators.Base.extend({
   getPaths: function getPaths() {
     this.nameLower = this.name.toLowerCase();
     this.rootPath = 'components/';
-    this.destPath = this.rootPath + this.nameLower + '/' + this.name + this.ext;
+    this.destPath = this.rootPath + this.nameLower + '/';
   },
 
   getComponent: function getComponent() {
     if (this.config.get('env') === 'meteor') {
-      this.compPath = 'comp_mt.js';
+      this.comp = 'comp_mt.js';
     } else if (this.config.get('env') === 'react-native') {
-      this.compPath = 'comp_rn.js';
+      this.comp = 'comp_rn.js';
     } else {
-      this.compPath = 'comp.js';
+      this.comp = 'comp.js';
     }
   },
 
-  writeFile: function writeFile() {
+  writeComponent: function writeComponent() {
+    var ext = this.config.get('componentExtension') || '.jsx';
+    var compPath = this.destPath + this.name + ext;
+
     this.fs.copyTpl(
-      this.templatePath(this.compPath),
-      this.destinationPath(this.destPath),
+      this.templatePath(this.comp),
+      this.destinationPath(compPath),
+      { name: this.name }
+    );
+  },
+
+  writeStyle: function writeStyle() {
+    var ext = '.css';
+    var stylePath = this.destPath + this.name + ext;
+
+    this.fs.copyTpl(
+      this.templatePath('comp.scss'),
+      this.destinationPath(stylePath),
       { name: this.name }
     );
   },
