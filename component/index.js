@@ -46,11 +46,11 @@ module.exports = generators.Base.extend({
   },
 
   writeStyle: function writeStyle() {
-    var ext = '.css';
+    var ext = this.config.get('styleExtension') || '.css';
     var stylePath = this.destPath + this.name + ext;
 
     this.fs.copyTpl(
-      this.templatePath('comp.scss'),
+      this.templatePath('comp.css'),
       this.destinationPath(stylePath),
       { name: this.name }
     );
